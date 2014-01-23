@@ -1,4 +1,4 @@
-package com.pdbarrat.hsh;
+package com.sds.hsh;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -18,6 +18,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;

@@ -1,4 +1,4 @@
-package com.pdbarrat.hsh;
+package com.sds.hsh;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -7,6 +7,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+
 
 // action bar that acts as parent for many activities in the project
 
