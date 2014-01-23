@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="horizontal"
+    android:padding="5dp" >
+
+    <TextView
+        android:id="@+id/tv_schedule_listView_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:textSize="@dimen/fontSize_listFont" />
+
+    <LinearLayout
+        android:id="@+id/ll_schedule_listView_playingAgainst"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/tv_schedule_listView_date"
+        android:layout_marginLeft="30dp" >
+
+        <TextView
+            android:id="@+id/tv_schedule_listView_playingAtNames"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="at"
+            android:textSize="@dimen/fontSize_listFont" />
+
+        <TextView
+            android:id="@+id/tv_schedule_listView_awayTeam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textSize="@dimen/fontSize_listFont" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_schedule_listView_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true" >
+
+        <TextView
+            android:id="@+id/tv_schedule_listView_homeScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#3339fb"
+            android:textSize="@dimen/fontSize_listFont"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_schedule_listView_playingAtScores"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="@dimen/fontSize_listFont" />
+
+        <TextView
+            android:id="@+id/tv_schedule_listView_awayScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/fontSize_listFont" />
+    </LinearLayout>
+
+</RelativeLayout>
