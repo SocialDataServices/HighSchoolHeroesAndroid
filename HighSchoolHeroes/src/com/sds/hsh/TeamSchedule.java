@@ -40,27 +40,30 @@ public class TeamSchedule extends BaseClass {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_team_schedule);
 		
+		// set ThreadPolicy, this is needed to pull down info from the db on the main thread
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		StrictMode.setThreadPolicy(policy);
 		
 		instantiateComponents();
+		games = getSchedule();
 		setupListView();
-		getSchedule();
 	}
 	
 	private ArrayList<ScheduledGame> getSchedule() {
 		
 		ArrayList<ScheduledGame> result = new ArrayList<ScheduledGame>();
 		
-		String home = "";
-		String jsonString = "";
+		String home = "", jsonString = "";
 		StringBuilder sb = new StringBuilder();
 		InputStream is = null;
+		
+		//db query 
 		ArrayList<NameValuePair> nvPairs = new ArrayList<NameValuePair>();
 		nvPairs.add(new BasicNameValuePair("school", "Oxford High School"));
 		nvPairs.add(new BasicNameValuePair("sport", "Football"));
 		nvPairs.add(new BasicNameValuePair("sex", "0"));
 		
+		//load the JSON into an input stream
 		try {
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpPost httpPost = new HttpPost("http://www.sodaservices.com/HighSchoolHeroes/php/getSchedule.php");
@@ -69,9 +72,11 @@ public class TeamSchedule extends BaseClass {
 			HttpEntity entity = response.getEntity();
 			is = entity.getContent();
 		} catch(Exception e) {
-			Log.e("log_tag", "Http Error1" + e.toString());
+			Log.e("log_tag", "Pull From Server" + e.toString());
 		}	
 		
+		// parse the JSON and load it into a string
+		// each row should be delimited by \n's
 		try{
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
 			
@@ -87,10 +92,10 @@ public class TeamSchedule extends BaseClass {
 			jsonString = sb.toString();
 		}
 		catch (Exception e) {
-			Log.e("log_tag", "Http Error2" + e.toString());
+			Log.e("log_tag", "JSON to String" + e.toString());
 		}
 		
-		//parse json
+		// Print the JSON to log for debugging
 		Log.d("JSON", jsonString);
 		
 		JSONArray jArray = new JSONArray();
@@ -107,6 +112,9 @@ public class TeamSchedule extends BaseClass {
 		
 		try {
 			JSONObject json_data = new JSONObject();
+			
+			// iterate through the JSON, adding the data to arrays
+			home = json_data.getString("School");
 			for(int i = 0; i < jArray.length(); i++) {
 				json_data = jArray.getJSONObject(i);
 				scores[i] = json_data.getString("Score");
@@ -114,7 +122,6 @@ public class TeamSchedule extends BaseClass {
 				date[i] = json_data.getString("Date");
 				location[i] = json_data.getString("Location");
 			}
-			home = json_data.getString("School");
 		}catch(JSONException e) {
 			Log.e("no data", "No data found");
 		}
@@ -122,6 +129,7 @@ public class TeamSchedule extends BaseClass {
 			e.printStackTrace();
 		}
 		
+		// populate the ArrayList with info from the JSON
 		for(int i = 0; i < jArray.length(); i++)
 			result.add(new ScheduledGame(home, opponent[i], didHomeTeamWin(i), getHomePoints(i), getAwayPoints(i), getDate(i)));
 		
@@ -165,9 +173,7 @@ public class TeamSchedule extends BaseClass {
 	}
 	
 	private void setupListView() {
-		
-		games = getSchedule();
-		
+			
 		scheduleListAdapter = new ScheduleListViewAdapter(this, R.layout.schedule_list_view_layout, games);
 		lv_schedule.setAdapter(scheduleListAdapter);
 		
