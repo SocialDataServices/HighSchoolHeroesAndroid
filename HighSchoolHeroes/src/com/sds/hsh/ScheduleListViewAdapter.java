@@ -20,7 +20,6 @@ public class ScheduleListViewAdapter extends ArrayAdapter<ScheduledGame> {
 	
 	private ArrayList<ScheduledGame> games;
 	Context ctx;
-	int timerHours, timerMinutes, timerSeconds;
 	int xmlResource;
 
     public ScheduleListViewAdapter(Context context, int textViewResourceId, ArrayList<ScheduledGame> games) {

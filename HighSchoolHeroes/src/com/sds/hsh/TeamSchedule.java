@@ -114,14 +114,14 @@ public class TeamSchedule extends BaseClass {
 			JSONObject json_data = new JSONObject();
 			
 			// iterate through the JSON, adding the data to arrays
-			home = json_data.getString("School");
-			for(int i = 0; i < jArray.length(); i++) {
+			for(int i = 0; i < jArray.length(); i++) {		
 				json_data = jArray.getJSONObject(i);
 				scores[i] = json_data.getString("Score");
 				opponent[i] = json_data.getString("Opponent");
 				date[i] = json_data.getString("Date");
 				location[i] = json_data.getString("Location");
 			}
+			home = json_data.getString("School");
 		}catch(JSONException e) {
 			Log.e("no data", "No data found");
 		}
@@ -168,7 +168,8 @@ public class TeamSchedule extends BaseClass {
 		Calendar result = Calendar.getInstance();	
 		String[] splitDate = thisDate.split("-");
 		
-		result.set(Integer.parseInt(splitDate[0]), Integer.parseInt(splitDate[1]), Integer.parseInt(splitDate[2]));
+		// the date from the database is coming in a 1-12 format, but Calendar takes a 0-11
+		result.set(Integer.parseInt(splitDate[0]), Integer.parseInt(splitDate[1])-1, Integer.parseInt(splitDate[2]));
 		return result;
 	}
 	

@@ -87,9 +87,13 @@ public class BaseClass extends SherlockActivity{
 		switch (item.getItemId()) {
 
 	    	case R.id.viewSchedule:
-	    		Intent toAddNew = new Intent(getApplicationContext(), TeamSchedule.class);
-	    		startActivity(toAddNew);
+	    		Intent toSchedule = new Intent(getApplicationContext(), TeamSchedule.class);
+	    		startActivity(toSchedule);
 	        	return true;
+	    	case R.id.viewRoster:
+	    		Intent toRoster = new Intent(getApplicationContext(), Roster.class);
+	    		startActivity(toRoster);
+	    		return true;
 
 	       } // end switch    
 		return true;
