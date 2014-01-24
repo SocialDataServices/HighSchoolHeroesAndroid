@@ -1,0 +1,122 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".Roster" >
+
+    <LinearLayout
+        android:id="@+id/ll_roster_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1" >
+
+        <ImageButton
+            android:id="@+id/ib_roster_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/search_light" />
+
+        <EditText
+            android:id="@+id/et_roster_search"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Search" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@id/ll_roster_search"
+        android:id="@+id/ll_roster_sortBy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:weightSum="1" >
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight=".2"
+            android:text="Sort By:"
+            android:textSize="@dimen/fontSize_rosterFont"
+            android:layout_gravity="center_vertical" />
+
+        <Spinner
+            android:id="@+id/spin_roster_filters"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight=".8"
+            android:background="@drawable/spinner_selector"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_roster_columnHeaders"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_roster_sortBy"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:weightSum="1" >
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight=".14"
+            android:text="#"
+            android:textSize="@dimen/fontSize_rosterFont" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:text="Name"
+            android:textSize="@dimen/fontSize_rosterFont" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight=".14"
+            android:text="Year"
+            android:textSize="@dimen/fontSize_rosterFont" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight=".14"
+            android:text="Ht."
+            android:textSize="@dimen/fontSize_rosterFont" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight=".14"
+            android:text="Wt."
+            android:textSize="@dimen/fontSize_rosterFont" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight=".14"
+            android:text="Pos"
+            android:textSize="@dimen/fontSize_rosterFont" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lv_roster"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/ll_roster_columnHeaders"
+        android:layout_below="@id/ll_roster_columnHeaders"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:choiceMode="singleChoice"
+        android:dividerHeight="3dp"
+        android:listSelector="@drawable/hololight_list_selector_holo_light" />
+
+</RelativeLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="horizontal"
+    android:padding="5dp"
+    android:weightSum="1" >
+
+    <TextView
+        android:id="@+id/tv_roster_listView_number"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight=".14"
+        android:textSize="@dimen/fontSize_rosterFont" />
+
+    <TextView
+        android:id="@+id/tv_roster_listView_name"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight=".3"
+        android:textSize="@dimen/fontSize_rosterFont" />
+
+    <TextView
+        android:id="@+id/tv_roster_listView_year"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight=".14"
+        android:textSize="@dimen/fontSize_rosterFont" />
+
+    <TextView
+        android:id="@+id/tv_roster_listView_height"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight=".14"
+        android:textSize="@dimen/fontSize_rosterFont" />
+
+    <TextView
+        android:id="@+id/tv_roster_listView_weight"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight=".14"
+        android:textSize="@dimen/fontSize_rosterFont" />
+
+    <TextView
+        android:id="@+id/tv_roster_listView_position"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight=".14"
+        android:textSize="@dimen/fontSize_rosterFont" />
+
+</LinearLayout>
