@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -23,11 +24,14 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class Roster extends BaseClass {
 
@@ -41,6 +45,9 @@ public class Roster extends BaseClass {
 	Spinner spin_filters;
 	ArrayList<String> filtersList;
 	ArrayAdapter<String> filtersSpinnerAdapter;
+	TextView tv_nameHeader, tv_weightHeader, tv_heightHeader, tv_positionHeader, tv_yearHeader, tv_numberHeader;
+	boolean nameInAscending = false, weightInAscending = false, heightInAscending = false, positionInAscending = false, yearInAscending = false, 
+			numberInAscending = false;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,6 +62,64 @@ public class Roster extends BaseClass {
 		makeFiltersSpinner();
 	}
 	
+	private void sortByHeightAscending() {
+		Collections.sort(players, new AscendingHeightComparer());
+		rosterListAdapter.notifyDataSetChanged();
+	}
+	
+	private void sortByHeightDescending() {
+		Collections.sort(players, new DescendingHeightComparer());
+		rosterListAdapter.notifyDataSetChanged();
+	}
+	
+	private void sortByWeightAscending() {
+		Collections.sort(players, new AscendingWeightComparer());
+		rosterListAdapter.notifyDataSetChanged();
+	}
+	
+	private void sortByWeightDescending() {
+		Collections.sort(players, new DescendingWeightComparer());
+		rosterListAdapter.notifyDataSetChanged();
+	}
+	
+	private void sortByPositionAscending() {
+		
+	}
+	
+	private void sortByPositionDescending() {
+		
+	}
+
+	private void sortByYearAscending() {
+		Collections.sort(players, new AscendingYearComparer());
+		rosterListAdapter.notifyDataSetChanged();
+	}
+	
+	private void sortByYearDescending() {
+		Collections.sort(players, new DescendingYearComparer());
+		rosterListAdapter.notifyDataSetChanged();
+	}
+	
+	private void sortByNumberAscending() {
+		Collections.sort(players, new AscendingNumberComparer());
+		rosterListAdapter.notifyDataSetChanged();
+	}
+	
+	private void sortByNumberDescending() {
+		Collections.sort(players, new DescendingNumberComparer());
+		rosterListAdapter.notifyDataSetChanged();
+	}
+	
+	private void sortByNameAscending() {
+		Collections.sort(players, new AscendingNameComparer());
+		rosterListAdapter.notifyDataSetChanged();
+	}
+	
+	private void sortByNameDescending() {
+		Collections.sort(players, new DescendingNameComparer());
+		rosterListAdapter.notifyDataSetChanged();
+	}
+	
 	private void makeFiltersSpinner() {
 		
 		filtersList = new ArrayList<String>();
@@ -66,7 +131,28 @@ public class Roster extends BaseClass {
 		filtersSpinnerAdapter = new ArrayAdapter<String>(getApplicationContext(),R.drawable.spinner_template,filtersList);
 		filtersSpinnerAdapter.setDropDownViewResource(R.drawable.spinner_dropdown_template);
 		spin_filters.setAdapter(filtersSpinnerAdapter);
-		//add
+		
+		spin_filters.setOnItemSelectedListener(new OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
+				switch(pos) {
+					case 0:
+						sortByPositionAscending();
+						break;
+					case 1:
+						sortByYearAscending();
+						break;
+					case 2:
+						sortByNumberAscending();
+						break;
+					case 3:
+						sortByNameAscending();
+						break;
+				}
+				
+			}
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
 	}
 	
 	private void setupListView() {
@@ -179,12 +265,163 @@ public class Roster extends BaseClass {
 		return result;
 	}
 	
+	private void setAllSortBooleansFalse() {
+		
+		nameInAscending = false;
+		heightInAscending = false;
+		weightInAscending = false;
+		numberInAscending = false;
+		positionInAscending = false;
+		yearInAscending = false;
+	}
+	
+	private void setBooleansForNameAscending() {
+		
+		nameInAscending = true;
+		heightInAscending = false;
+		weightInAscending = false;
+		numberInAscending = false;
+		positionInAscending = false;
+		yearInAscending = false;
+	}
+	
+	private void setBooleansForHeightAscending() {
+		
+		nameInAscending = false;
+		heightInAscending = true;
+		weightInAscending = false;
+		numberInAscending = false;
+		positionInAscending = false;
+		yearInAscending = false;
+	}
+
+	private void setBooleansForWeightAscending() {
+	
+	nameInAscending = false;
+	heightInAscending = false;
+	weightInAscending = true;
+	numberInAscending = false;
+	positionInAscending = false;
+	yearInAscending = false;
+}
+
+	private void setBooleansForNumberAscending() {
+	
+	nameInAscending = false;
+	heightInAscending = false;
+	weightInAscending = false;
+	numberInAscending = true;
+	positionInAscending = false;
+	yearInAscending = false;
+}
+
+	private void setBooleansForPositionAscending() {
+	
+	nameInAscending = false;
+	heightInAscending = false;
+	weightInAscending = false;
+	numberInAscending = false;
+	positionInAscending = true;
+	yearInAscending = false;
+}
+
+	private void setBooleansForYearAscending() {
+	
+	nameInAscending = false;
+	heightInAscending = false;
+	weightInAscending = false;
+	numberInAscending = false;
+	positionInAscending = false;
+	yearInAscending = true;
+}
+	
+	public OnClickListener columnHeaderListener = new OnClickListener() {
+		public void onClick(View v) {
+			
+			switch(v.getId()) {
+				case R.id.tv_roster_header_name:
+					if(nameInAscending) {
+						sortByNameDescending();
+						setAllSortBooleansFalse();
+					}
+					else {
+						sortByNameAscending();
+						setBooleansForNameAscending();
+					}
+					break;
+				case R.id.tv_roster_header_height:
+					if(heightInAscending) {
+						sortByHeightDescending();
+						setAllSortBooleansFalse();
+					}
+					else {
+						sortByHeightAscending();
+						setBooleansForHeightAscending();
+					}
+					break;
+				case R.id.tv_roster_header_number:
+					if(numberInAscending) {
+						sortByNumberDescending();
+						setAllSortBooleansFalse();
+					}
+					else {
+						sortByNumberAscending();
+						setBooleansForNumberAscending();
+					}
+					break;
+				case R.id.tv_roster_header_weight:
+					if(weightInAscending) {
+						sortByWeightDescending();
+						setAllSortBooleansFalse();
+					}
+					else {
+						sortByWeightAscending();
+						setBooleansForWeightAscending();
+					}
+					break;
+				case R.id.tv_roster_header_position:
+					if(positionInAscending) {
+						sortByPositionDescending();
+						setAllSortBooleansFalse();
+					}
+					else {
+						sortByPositionAscending();
+						setBooleansForPositionAscending();
+					}
+					break;
+				case R.id.tv_roster_header_year:
+					if(yearInAscending) {
+						sortByYearDescending();
+						setAllSortBooleansFalse();
+					}
+					else {
+						sortByYearAscending();
+						setBooleansForYearAscending();
+					}
+					break;	
+			}
+		}
+	};
+	
 	private void instantiateComponents() {
 		
 		lv_roster = (ListView)findViewById(R.id.lv_roster);
 		et_search = (EditText)findViewById(R.id.et_roster_search);
 		et_search.clearFocus();
 		spin_filters = (Spinner)findViewById(R.id.spin_roster_filters);
+		tv_nameHeader = (TextView)findViewById(R.id.tv_roster_header_name);
+		tv_weightHeader = (TextView)findViewById(R.id.tv_roster_header_weight);
+		tv_heightHeader = (TextView)findViewById(R.id.tv_roster_header_height);
+		tv_positionHeader = (TextView)findViewById(R.id.tv_roster_header_position);
+		tv_yearHeader = (TextView)findViewById(R.id.tv_roster_header_year);
+		tv_numberHeader = (TextView)findViewById(R.id.tv_roster_header_number);
+		
+		tv_nameHeader.setOnClickListener(columnHeaderListener);
+		tv_weightHeader.setOnClickListener(columnHeaderListener);
+		tv_heightHeader.setOnClickListener(columnHeaderListener);
+		tv_positionHeader.setOnClickListener(columnHeaderListener);
+		tv_yearHeader.setOnClickListener(columnHeaderListener);
+		tv_numberHeader.setOnClickListener(columnHeaderListener);
 	}
 
 }

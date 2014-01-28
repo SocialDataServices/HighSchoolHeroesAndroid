@@ -8,101 +8,89 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Roster" >
 
-    <LinearLayout
-        android:id="@+id/ll_roster_search"
+    <EditText
+        android:id="@+id/et_roster_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1" >
+        android:hint="Search"
+        android:imeOptions="actionSearch" />
 
-        <ImageButton
-            android:id="@+id/ib_roster_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/search_light" />
+    <TextView
+        android:id="@+id/tv_roster_sortBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/et_roster_search"
+        android:text="Sort By"
+        android:textSize="@dimen/fontSize_rosterFont" />
 
-        <EditText
-            android:id="@+id/et_roster_search"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Search" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_below="@id/ll_roster_search"
-        android:id="@+id/ll_roster_sortBy"
+    <Spinner
+        android:id="@+id/spin_roster_filters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:weightSum="1" >
-
-        <TextView
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight=".2"
-            android:text="Sort By:"
-            android:textSize="@dimen/fontSize_rosterFont"
-            android:layout_gravity="center_vertical" />
-
-        <Spinner
-            android:id="@+id/spin_roster_filters"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight=".8"
-            android:background="@drawable/spinner_selector"
-            android:layout_gravity="center_vertical" />
-    </LinearLayout>
+        android:layout_below="@id/tv_roster_sortBy"
+        android:layout_alignLeft="@id/tv_roster_sortBy"
+        android:background="@drawable/spinner_selector" />
 
     <LinearLayout
         android:id="@+id/ll_roster_columnHeaders"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ll_roster_sortBy"
+        android:layout_below="@id/spin_roster_filters"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:weightSum="1" >
 
         <TextView
+            android:id="@+id/tv_roster_header_number"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight=".14"
+            android:clickable="true"
             android:text="#"
             android:textSize="@dimen/fontSize_rosterFont" />
 
         <TextView
+            android:id="@+id/tv_roster_header_name"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight=".3"
+            android:clickable="true"
             android:text="Name"
             android:textSize="@dimen/fontSize_rosterFont" />
 
         <TextView
+            android:id="@+id/tv_roster_header_year"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight=".14"
+            android:clickable="true"
             android:text="Year"
             android:textSize="@dimen/fontSize_rosterFont" />
 
         <TextView
+            android:id="@+id/tv_roster_header_height"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight=".14"
+            android:clickable="true"
             android:text="Ht."
             android:textSize="@dimen/fontSize_rosterFont" />
 
         <TextView
+            android:id="@+id/tv_roster_header_weight"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight=".14"
+            android:clickable="true"
             android:text="Wt."
             android:textSize="@dimen/fontSize_rosterFont" />
 
         <TextView
+            android:id="@+id/tv_roster_header_position"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight=".14"
+            android:clickable="true"
             android:text="Pos"
             android:textSize="@dimen/fontSize_rosterFont" />
     </LinearLayout>
