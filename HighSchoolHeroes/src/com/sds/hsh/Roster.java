@@ -19,19 +19,29 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.actionbarsherlock.app.ActionBar;
 
 public class Roster extends BaseClass {
 
@@ -47,19 +57,73 @@ public class Roster extends BaseClass {
 	ArrayAdapter<String> filtersSpinnerAdapter;
 	TextView tv_nameHeader, tv_weightHeader, tv_heightHeader, tv_positionHeader, tv_yearHeader, tv_numberHeader;
 	boolean nameInAscending = false, weightInAscending = false, heightInAscending = false, positionInAscending = false, yearInAscending = false, 
-			numberInAscending = false;
+			numberInAscending = false, postApi10;
+	ImageButton ib_search;
+	Context ctx;
 	
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_roster);
 		
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		StrictMode.setThreadPolicy(policy);
+		ctx = this;
 		
 		instantiateComponents();
 		players = getRoster();
 		setupListView();
 		makeFiltersSpinner();
+		configureActionBar();
+		et_search.setOnEditorActionListener(editTextListener);
+		
+	}
+	
+	public TextView.OnEditorActionListener editTextListener = new TextView.OnEditorActionListener() {
+		public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+			if(actionId == EditorInfo.IME_ACTION_SEARCH){
+				String toSearchFor = et_search.getText().toString();
+				et_search.setVisibility(View.GONE);
+				et_search.clearFocus();
+				et_search.setText("");
+				ib_search.setVisibility(View.VISIBLE);
+				InputMethodManager inputManager = (InputMethodManager)            
+						  ctx.getSystemService(Context.INPUT_METHOD_SERVICE); 
+						    inputManager.hideSoftInputFromWindow(((Activity) ctx).getCurrentFocus().getWindowToken(),      
+						    InputMethodManager.HIDE_NOT_ALWAYS);
+				return true;
+			}
+			return false;
+		}
+	};
+	
+	public OnClickListener imageBtnListener = new OnClickListener() {
+		public void onClick(View v) {
+			et_search.setVisibility(View.VISIBLE);
+			et_search.requestFocus();
+			InputMethodManager inputManager = (InputMethodManager)            
+					  ctx.getSystemService(Context.INPUT_METHOD_SERVICE); 
+					    inputManager.showSoftInput(et_search, 0);
+			ib_search.setVisibility(View.GONE);
+		}
+	};
+	
+	private void configureActionBar() {
+		
+		if(android.os.Build.VERSION.SDK_INT != android.os.Build.VERSION_CODES.GINGERBREAD_MR1) {
+			getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME); 
+			getSupportActionBar().setCustomView(R.layout.action_bar_layout);
+			et_search = (EditText)findViewById(R.id.et_actionBar_search);
+			et_search.setVisibility(View.GONE);
+			ib_search = (ImageButton)findViewById(R.id.ib_actionBar_search);
+			ib_search.setOnClickListener(imageBtnListener);
+			postApi10 = true;
+		}
+		else {
+			et_search = (EditText)findViewById(R.id.et_roster_search);
+			et_search.setVisibility(View.VISIBLE);
+			postApi10 = false;
+		}
 	}
 	
 	private void sortByHeightAscending() {
@@ -406,8 +470,6 @@ public class Roster extends BaseClass {
 	private void instantiateComponents() {
 		
 		lv_roster = (ListView)findViewById(R.id.lv_roster);
-		et_search = (EditText)findViewById(R.id.et_roster_search);
-		et_search.clearFocus();
 		spin_filters = (Spinner)findViewById(R.id.spin_roster_filters);
 		tv_nameHeader = (TextView)findViewById(R.id.tv_roster_header_name);
 		tv_weightHeader = (TextView)findViewById(R.id.tv_roster_header_weight);
