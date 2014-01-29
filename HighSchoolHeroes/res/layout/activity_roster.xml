@@ -17,28 +17,11 @@
         android:inputType="text"
         android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/tv_roster_sortBy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/et_roster_search"
-        android:text="Sort By"
-        android:textSize="@dimen/fontSize_rosterFont" />
-
-    <Spinner
-        android:id="@+id/spin_roster_filters"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/tv_roster_sortBy"
-        android:layout_below="@id/tv_roster_sortBy"
-        android:background="@drawable/spinner_selector" />
-
     <LinearLayout
         android:id="@+id/ll_roster_columnHeaders"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/spin_roster_filters"
+        android:layout_below="@id/et_roster_search"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:weightSum="1" >
 
@@ -76,7 +59,7 @@
             android:id="@+id/tv_roster_header_height"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:layout_weight=".14"
+            android:layout_weight=".15"
             android:clickable="true"
             android:text="Ht."
             android:textSize="@dimen/fontSize_rosterFont"
@@ -86,7 +69,7 @@
             android:id="@+id/tv_roster_header_weight"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:layout_weight=".16"
+            android:layout_weight=".15"
             android:clickable="true"
             android:text="Wt."
             android:textSize="@dimen/fontSize_rosterFont"

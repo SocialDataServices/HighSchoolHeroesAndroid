@@ -21,7 +21,9 @@ import org.json.JSONObject;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,12 +35,9 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -52,9 +51,6 @@ public class Roster extends BaseClass {
 	String[] playerFirsts, playerLasts, playerYears, playerHeights, playerPositions;
 	ListView lv_roster;
 	View previousSelection;
-	Spinner spin_filters;
-	ArrayList<String> filtersList;
-	ArrayAdapter<String> filtersSpinnerAdapter;
 	TextView tv_nameHeader, tv_weightHeader, tv_heightHeader, tv_positionHeader, tv_yearHeader, tv_numberHeader;
 	boolean nameInAscending = false, weightInAscending = false, heightInAscending = false, positionInAscending = false, yearInAscending = false, 
 			numberInAscending = false, postApi10;
@@ -73,20 +69,29 @@ public class Roster extends BaseClass {
 		instantiateComponents();
 		players = getRoster();
 		setupListView();
-		makeFiltersSpinner();
 		configureActionBar();
 		et_search.setOnEditorActionListener(editTextListener);
 		
+	}
+	
+	public void onBackPressed() {
+		resetActionBar();
+		super.onBackPressed();
+		
+	}
+	
+	private void resetActionBar() {
+		et_search.setVisibility(View.GONE);
+		et_search.clearFocus();
+		et_search.setText("");
+		ib_search.setVisibility(View.VISIBLE);
 	}
 	
 	public TextView.OnEditorActionListener editTextListener = new TextView.OnEditorActionListener() {
 		public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 			if(actionId == EditorInfo.IME_ACTION_SEARCH){
 				String toSearchFor = et_search.getText().toString();
-				et_search.setVisibility(View.GONE);
-				et_search.clearFocus();
-				et_search.setText("");
-				ib_search.setVisibility(View.VISIBLE);
+				resetActionBar();
 				InputMethodManager inputManager = (InputMethodManager)            
 						  ctx.getSystemService(Context.INPUT_METHOD_SERVICE); 
 						    inputManager.hideSoftInputFromWindow(((Activity) ctx).getCurrentFocus().getWindowToken(),      
@@ -183,42 +188,7 @@ public class Roster extends BaseClass {
 		Collections.sort(players, new DescendingNameComparer());
 		rosterListAdapter.notifyDataSetChanged();
 	}
-	
-	private void makeFiltersSpinner() {
 		
-		filtersList = new ArrayList<String>();
-		filtersList.add("Position");
-		filtersList.add("Year");
-		filtersList.add("Number");
-		filtersList.add("Name");
-		
-		filtersSpinnerAdapter = new ArrayAdapter<String>(getApplicationContext(),R.drawable.spinner_template,filtersList);
-		filtersSpinnerAdapter.setDropDownViewResource(R.drawable.spinner_dropdown_template);
-		spin_filters.setAdapter(filtersSpinnerAdapter);
-		
-		spin_filters.setOnItemSelectedListener(new OnItemSelectedListener() {
-			public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
-				switch(pos) {
-					case 0:
-						sortByPositionAscending();
-						break;
-					case 1:
-						sortByYearAscending();
-						break;
-					case 2:
-						sortByNumberAscending();
-						break;
-					case 3:
-						sortByNameAscending();
-						break;
-				}
-				
-			}
-			public void onNothingSelected(AdapterView<?> arg0) {
-			}
-		});
-	}
-	
 	private void setupListView() {
 		
 		rosterListAdapter = new RosterListViewAdapter(this, R.layout.roster_list_view_layout, players);
@@ -470,7 +440,6 @@ public class Roster extends BaseClass {
 	private void instantiateComponents() {
 		
 		lv_roster = (ListView)findViewById(R.id.lv_roster);
-		spin_filters = (Spinner)findViewById(R.id.spin_roster_filters);
 		tv_nameHeader = (TextView)findViewById(R.id.tv_roster_header_name);
 		tv_weightHeader = (TextView)findViewById(R.id.tv_roster_header_weight);
 		tv_heightHeader = (TextView)findViewById(R.id.tv_roster_header_height);

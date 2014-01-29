@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:background="#ffffff"
     android:orientation="horizontal"
-    android:paddingTop="6dp"
-    android:paddingBottom="10dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
     android:weightSum="1" >
 
     <TextView
@@ -33,14 +33,14 @@
         android:id="@+id/tv_roster_listView_height"
         android:layout_width="0dip"
         android:layout_height="wrap_content"
-        android:layout_weight=".14"
+        android:layout_weight=".15"
         android:textSize="@dimen/fontSize_rosterFont" />
 
     <TextView
         android:id="@+id/tv_roster_listView_weight"
         android:layout_width="0dip"
         android:layout_height="wrap_content"
-        android:layout_weight=".18"
+        android:layout_weight=".17"
         android:textSize="@dimen/fontSize_rosterFont" />
 
     <TextView
