@@ -85,7 +85,11 @@ public class BaseClass extends SherlockActivity{
 	protected boolean MenuChoice(MenuItem item) {
 	          
 		switch (item.getItemId()) {
-
+			
+			case R.id.viewMySchools:
+				Intent toSchools = new Intent(getApplicationContext(), SchoolsList.class);
+				startActivity(toSchools);
+				return true;
 	    	case R.id.viewSchedule:
 	    		Intent toSchedule = new Intent(getApplicationContext(), TeamSchedule.class);
 	    		startActivity(toSchedule);

@@ -62,15 +62,15 @@ class DescendingWeightComparer implements Comparator<Player> {
 
 class AscendingPositionComparer implements Comparator<Player> {
 	public int compare(Player first, Player second) {	
-		// need to see what all possible positions are
-		return 0;
+		Collator c = Collator.getInstance();
+		return c.compare(first.position, second.position);
 	}		
 }
 
 class DescendingPositionComparer implements Comparator<Player> {
 	public int compare(Player first, Player second) {	
-		// need to see what all possible positions are
-		return 0;
+		Collator c = Collator.getInstance();
+		return -(c.compare(first.position, second.position));
 	}		
 }
 

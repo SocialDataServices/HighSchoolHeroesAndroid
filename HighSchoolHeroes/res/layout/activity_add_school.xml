@@ -1,0 +1,55 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="6dp"
+    android:paddingRight="6dp"
+    android:paddingTop="@dimen/activity_vertical_margin" >
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/tv_addSchool_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/fontSize_schoolNameHeader" />
+
+    <TextView
+        android:id="@+id/tv_addSchool_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/fontSize_schoolNameHeader" />
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:id="@+id/ll_addSchool_cityStateSpins"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1" >
+
+        <Spinner
+            android:id="@+id/spin_addSchool_states"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/spinner_selector" />
+
+        <Spinner
+            android:id="@+id/spin_addSchool_cities"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:background="@drawable/spinner_selector"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <Spinner
+        android:id="@+id/spin_addSchool_schools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/spinner_selector"
+        android:visibility="gone" />
+
+</LinearLayout>

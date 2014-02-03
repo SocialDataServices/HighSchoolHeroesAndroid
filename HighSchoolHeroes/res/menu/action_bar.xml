@@ -1,33 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    
-    <item android:id="@+id/viewSchedule"
-        android:title="Schedule"
-        android:icon="@drawable/schedule"
-        android:orderInCategory="0"
-        android:showAsAction="ifRoom" />
-    
-    <item android:id="@+id/viewRoster"
-        android:title="Roster"
-        android:icon="@drawable/roster"
-        android:orderInCategory="1"
-        android:showAsAction="ifRoom" />
-    
-    <item android:id="@+id/viewFeature"
-        android:title="Feature Game"
-        android:icon="@drawable/feature"
-        android:orderInCategory="2"
-        android:showAsAction="ifRoom" />
-    
-    <item android:id="@+id/search"
-        android:title="Search"
-        android:icon="@drawable/search"
-        android:orderInCategory="3"
-        android:showAsAction="ifRoom" />
-        
-    
-    
-    
-</menu>
-    
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    
+    <item
+        android:id="@+id/viewMySchools"
+        android:icon="@drawable/my_schools"
+        android:orderInCategory="0"
+        android:showAsAction="ifRoom"
+        android:title="My Schools"/>
+    
+    <item
+        android:id="@+id/viewSchedule"
+        android:icon="@drawable/schedule"
+        android:orderInCategory="2"
+        android:showAsAction="ifRoom"
+        android:title="Schedule"/>
+    <item
+        android:id="@+id/viewFeature"
+        android:icon="@drawable/feature"
+        android:orderInCategory="1"
+        android:showAsAction="ifRoom"
+        android:title="Feature Game"/>
+    <item
+        android:id="@+id/viewRoster"
+        android:icon="@drawable/roster"
+        android:orderInCategory="3"
+        android:showAsAction="ifRoom"
+        android:title="Roster"/>
+
+</menu>

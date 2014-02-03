@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="6dp"
+    android:paddingRight="6dp"
+    android:paddingTop="@dimen/activity_vertical_margin" >
+
+    <TextView
+        android:id="@+id/tv_schools_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="My Schools"
+        android:textSize="@dimen/fontSize_schoolNameHeader" />
+
+    <Button
+        android:id="@+id/btn_schools_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:background="@drawable/button_selector"
+        android:text="Add School" />
+
+    <ListView
+        android:id="@+id/lv_schools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_schools_header"
+        android:layout_marginTop="20dp"
+        android:choiceMode="singleChoice"
+        android:dividerHeight="3dp"
+        android:listSelector="@drawable/hololight_list_selector_holo_light" />
+
+</RelativeLayout>

@@ -20,9 +20,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -59,7 +61,7 @@ public class TeamSchedule extends BaseClass {
 		
 		//db query 
 		ArrayList<NameValuePair> nvPairs = new ArrayList<NameValuePair>();
-		nvPairs.add(new BasicNameValuePair("school", "Oxford High School"));
+		nvPairs.add(new BasicNameValuePair("school", PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("currentSchool", "")));
 		nvPairs.add(new BasicNameValuePair("sport", "Football"));
 		nvPairs.add(new BasicNameValuePair("sex", "0"));
 		

@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -18,16 +17,16 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -39,9 +38,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 
+@SuppressLint("NewApi")
 public class Roster extends BaseClass {
 
 	EditText et_search;
@@ -73,13 +73,7 @@ public class Roster extends BaseClass {
 		et_search.setOnEditorActionListener(editTextListener);
 		
 	}
-	
-	public void onBackPressed() {
-		resetActionBar();
-		super.onBackPressed();
 		
-	}
-	
 	private void resetActionBar() {
 		et_search.setVisibility(View.GONE);
 		et_search.clearFocus();
@@ -92,10 +86,8 @@ public class Roster extends BaseClass {
 			if(actionId == EditorInfo.IME_ACTION_SEARCH){
 				String toSearchFor = et_search.getText().toString();
 				resetActionBar();
-				InputMethodManager inputManager = (InputMethodManager)            
-						  ctx.getSystemService(Context.INPUT_METHOD_SERVICE); 
-						    inputManager.hideSoftInputFromWindow(((Activity) ctx).getCurrentFocus().getWindowToken(),      
-						    InputMethodManager.HIDE_NOT_ALWAYS);
+				InputMethodManager inputManager = (InputMethodManager)ctx.getSystemService(Context.INPUT_METHOD_SERVICE); 
+				inputManager.hideSoftInputFromWindow(((Activity) ctx).getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 				return true;
 			}
 			return false;
@@ -106,9 +98,8 @@ public class Roster extends BaseClass {
 		public void onClick(View v) {
 			et_search.setVisibility(View.VISIBLE);
 			et_search.requestFocus();
-			InputMethodManager inputManager = (InputMethodManager)            
-					  ctx.getSystemService(Context.INPUT_METHOD_SERVICE); 
-					    inputManager.showSoftInput(et_search, 0);
+			InputMethodManager inputManager = (InputMethodManager)ctx.getSystemService(Context.INPUT_METHOD_SERVICE); 
+			inputManager.showSoftInput(et_search, 0);
 			ib_search.setVisibility(View.GONE);
 		}
 	};
@@ -117,7 +108,7 @@ public class Roster extends BaseClass {
 		
 		if(android.os.Build.VERSION.SDK_INT != android.os.Build.VERSION_CODES.GINGERBREAD_MR1) {
 			getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME); 
-			getSupportActionBar().setCustomView(R.layout.action_bar_layout);
+			getSupportActionBar().setCustomView(R.layout.roster_action_bar);
 			et_search = (EditText)findViewById(R.id.et_actionBar_search);
 			et_search.setVisibility(View.GONE);
 			ib_search = (ImageButton)findViewById(R.id.ib_actionBar_search);
@@ -152,11 +143,13 @@ public class Roster extends BaseClass {
 	}
 	
 	private void sortByPositionAscending() {
-		
+		Collections.sort(players, new AscendingPositionComparer());
+		rosterListAdapter.notifyDataSetChanged();
 	}
 	
 	private void sortByPositionDescending() {
-		
+		Collections.sort(players, new DescendingPositionComparer());
+		rosterListAdapter.notifyDataSetChanged();
 	}
 
 	private void sortByYearAscending() {
@@ -217,7 +210,8 @@ public class Roster extends BaseClass {
 		
 		//db query 
 		ArrayList<NameValuePair> nvPairs = new ArrayList<NameValuePair>();
-		nvPairs.add(new BasicNameValuePair("school", "Oxford High School"));
+		
+		nvPairs.add(new BasicNameValuePair("school", PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("currentSchool", "")));
 		nvPairs.add(new BasicNameValuePair("sport", "Football"));
 		nvPairs.add(new BasicNameValuePair("sex", "0"));
 		
