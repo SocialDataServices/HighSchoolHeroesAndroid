@@ -151,6 +151,7 @@ public class SchoolAdder extends BaseClass {
 			db.addSchool(s.id, s.name, s.city, s.state, s.zip, s.size);
 			SharedPreferences.Editor spEditor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
 			spEditor.putString("currentSchool", s.name);
+			spEditor.putBoolean("noSchools", false);
 			spEditor.commit();
 			Intent i = new Intent(this, TeamSchedule.class);
 			startActivity(i);

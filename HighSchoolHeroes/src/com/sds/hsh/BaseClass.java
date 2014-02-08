@@ -2,8 +2,10 @@ package com.sds.hsh;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.preference.PreferenceManager;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -11,7 +13,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 // action bar that acts as parent for many activities in the project
 
-public class BaseClass extends SherlockActivity{
+public class BaseClass extends SherlockFragmentActivity{
 	
 	public void onPause() {
 		super.onPause();
@@ -84,19 +86,39 @@ public class BaseClass extends SherlockActivity{
 	// the ActionBar
 	protected boolean MenuChoice(MenuItem item) {
 	          
+		boolean noSchools = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("noSchools", false);
+		
 		switch (item.getItemId()) {
 			
 			case R.id.viewMySchools:
-				Intent toSchools = new Intent(getApplicationContext(), SchoolsList.class);
-				startActivity(toSchools);
+				if(noSchools) {
+					Intent addNew = new Intent(getApplicationContext(), SchoolAdder.class);
+					startActivity(addNew);
+				}
+				else {
+					Intent toSchools = new Intent(getApplicationContext(), SchoolsList.class);
+					startActivity(toSchools);
+				}
 				return true;
 	    	case R.id.viewSchedule:
-	    		Intent toSchedule = new Intent(getApplicationContext(), TeamSchedule.class);
-	    		startActivity(toSchedule);
+	    		if(noSchools) {
+					Intent addNew = new Intent(getApplicationContext(), SchoolAdder.class);
+					startActivity(addNew);
+				}
+	    		else {
+	    			Intent toSchedule = new Intent(getApplicationContext(), TeamSchedule.class);
+	    			startActivity(toSchedule);
+	    		}
 	        	return true;
 	    	case R.id.viewRoster:
-	    		Intent toRoster = new Intent(getApplicationContext(), Roster.class);
-	    		startActivity(toRoster);
+	    		if(noSchools) {
+					Intent addNew = new Intent(getApplicationContext(), SchoolAdder.class);
+					startActivity(addNew);
+				}
+	    		else {
+	    			Intent toRoster = new Intent(getApplicationContext(), Roster.class);
+	    			startActivity(toRoster);
+	    		}
 	    		return true;
 
 	       } // end switch    

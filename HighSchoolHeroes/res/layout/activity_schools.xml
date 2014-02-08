@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_schools"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,6 +7,14 @@
     android:paddingRight="6dp"
     android:paddingTop="@dimen/activity_vertical_margin" >
 
+    <TextView
+        android:id="@+id/tv_schools_noneFound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="No schools found.\nPress '+' to add one."
+        android:textSize="@dimen/fontSize_schoolNameHeader"
+        android:visibility="gone" />
     <TextView
         android:id="@+id/tv_schools_header"
         android:layout_width="wrap_content"
@@ -19,9 +28,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:visibility="gone"
         android:background="@drawable/button_selector"
-        android:text="Add School" />
+        android:text="Add School"
+        android:visibility="gone" />
 
     <ListView
         android:id="@+id/lv_schools"
@@ -32,5 +41,24 @@
         android:choiceMode="singleChoice"
         android:dividerHeight="3dp"
         android:listSelector="@drawable/hololight_list_selector_holo_light" />
+	
+    <TextView
+        android:id="@+id/tv_schools_currentSchoolLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lv_schools"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" 
+        android:textSize="24sp"
+        android:text="Current School:"
+        android:visibility="gone" />
+    
+    <TextView
+        android:id="@+id/tv_schools_currentSchool"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_schools_currentSchoolLabel"
+        android:layout_centerHorizontal="true" 
+        android:textSize="24sp" />
 
 </RelativeLayout>

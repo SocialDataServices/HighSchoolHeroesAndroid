@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:background="#ffffff"
     android:orientation="horizontal"
-    android:padding="5dp" >
+    android:padding="5dp" 
+    android:descendantFocusability="blocksDescendants" >"
 
     <TextView
         android:id="@+id/tv_schools_listView_name"

@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_schools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="2dp"
+    android:paddingLeft="2dp"
+    android:paddingRight="4dp"
+    android:paddingTop="2dp" >
+
+    <ImageView
+        android:id="@+id/iv_playerBio_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/no_pic" />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/tv_playerBio_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:id="@+id/tv_playerBio_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_playerBio_name"
+        android:layout_marginTop="6dp" />
+
+    <TextView
+        android:id="@+id/tv_playerBio_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_playerBio_number"
+        android:layout_marginTop="6dp" />
+
+    <TextView
+        android:id="@+id/tv_playerBio_weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_playerBio_height"
+        android:layout_marginTop="6dp" />
+
+    <TextView
+        android:id="@+id/tv_playerBio_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_playerBio_weight"
+        android:layout_marginTop="6dp" />
+
+    <TextView
+        android:id="@+id/tv_playerBio_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_playerBio_year"
+        android:layout_marginTop="6dp" />
+
+</RelativeLayout>

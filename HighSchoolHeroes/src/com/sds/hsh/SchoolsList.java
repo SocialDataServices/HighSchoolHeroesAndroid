@@ -1,8 +1,7 @@
 package com.sds.hsh;
 
 import java.util.ArrayList;
-import com.actionbarsherlock.app.ActionBar;
-import android.annotation.SuppressLint;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,7 +15,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.actionbarsherlock.app.ActionBar;
 
 public class SchoolsList extends BaseClass {
 	
@@ -30,6 +32,7 @@ public class SchoolsList extends BaseClass {
 	Button btn_addSchool;
 	Context myContext;
 	ImageButton ib_addSchool;
+	TextView tv_currentSchool, tv_currentSchoolLabel, tv_error;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,11 +41,19 @@ public class SchoolsList extends BaseClass {
 		db = new DBAdapter(this);
 		db.open();
 		firstLaunch = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("firstLaunch", true);
+		instantiateComponents();
 		
 		if(firstLaunch)
 			showTutorial();
 		else 
 			setupActivity();
+	}
+	
+	private void instantiateComponents() {
+		
+		tv_currentSchool = (TextView)findViewById(R.id.tv_schools_currentSchool);
+		tv_currentSchoolLabel = (TextView)findViewById(R.id.tv_schools_currentSchoolLabel);
+		tv_error = (TextView)findViewById(R.id.tv_schools_noneFound);
 	}
 	
 	private void configureActionBar() {
@@ -81,7 +92,7 @@ public class SchoolsList extends BaseClass {
 		
 		lv_schools = (ListView)findViewById(R.id.lv_schools);
 		
-		schoolsListAdapter = new SchoolsListViewAdapter(this, R.layout.schools_list_view_layout, userSchools);
+		schoolsListAdapter = new SchoolsListViewAdapter(this, R.layout.schools_list_view_layout, userSchools, tv_currentSchoolLabel, tv_currentSchool, tv_error);
 		lv_schools.setAdapter(schoolsListAdapter);
 		
 		lv_schools.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -92,6 +103,8 @@ public class SchoolsList extends BaseClass {
 				}
 				view.setBackgroundColor(Color.parseColor("#ff00ddff"));
 				previousSelection = view;			
+				tv_currentSchoolLabel.setVisibility(View.VISIBLE);
+				tv_currentSchool.setText(userSchools.get(pos).name);
 				SharedPreferences.Editor spEditor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
 				spEditor.putString("currentSchool", userSchools.get(pos).name);
 				spEditor.commit();
@@ -109,10 +122,20 @@ public class SchoolsList extends BaseClass {
 		configureActionBar();
 		
 		userSchools = db.getSchools();
-		if(userSchools.size() == 0)
+		if(userSchools.size() == 0) {
+			SharedPreferences.Editor spEditor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+			spEditor.putBoolean("noSchools", true);
+			spEditor.commit();
 			addNewSchool();
+		}
 		else
 			setupListView();
+		
+		String userCurrentSchool = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("currentSchool", "");
+		if(!userCurrentSchool.equals("")) {
+			tv_currentSchoolLabel.setVisibility(View.VISIBLE);
+			tv_currentSchool.setText(userCurrentSchool);
+		}
 	}
 
 }

@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -17,11 +18,12 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.support.v4.app.FragmentManager;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,7 +40,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.actionbarsherlock.app.ActionBar;
 
 @SuppressLint("NewApi")
@@ -181,6 +183,23 @@ public class Roster extends BaseClass {
 		Collections.sort(players, new DescendingNameComparer());
 		rosterListAdapter.notifyDataSetChanged();
 	}
+	
+	private void showPlayerBioDialog(Player p) {
+		
+		FragmentManager fm = getSupportFragmentManager();
+		PlayerBioDialogFragment playerBio = new PlayerBioDialogFragment();
+		playerBio.setCancelable(true);
+		playerBio.setRetainInstance(false);
+		Bundle b = new Bundle();
+		b.putString("name", p.firstName + " " + p.lastName);
+		b.putInt("number", p.number);
+		b.putInt("weight", p.weight);
+		b.putString("height", p.height);
+		b.putString("position", p.position);
+		b.putString("year", p.year);
+		playerBio.setArguments(b);
+		playerBio.show(fm,  "player bio fragment");
+	}
 		
 	private void setupListView() {
 		
@@ -196,6 +215,8 @@ public class Roster extends BaseClass {
 				
 				view.setBackgroundColor(Color.parseColor("#ff00ddff"));
 				previousSelection = view;			
+				
+				showPlayerBioDialog(players.get(pos));
 			}
 		});
 	}
