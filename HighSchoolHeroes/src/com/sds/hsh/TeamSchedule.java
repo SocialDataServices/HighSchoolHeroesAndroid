@@ -19,8 +19,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -29,6 +27,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class TeamSchedule extends BaseClass {
 
@@ -37,6 +36,7 @@ public class TeamSchedule extends BaseClass {
 	ScheduleListViewAdapter scheduleListAdapter;
 	ArrayList<ScheduledGame> games;
 	String[] opponent, scores, date, location;
+	TextView tv_schoolName;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,6 +45,9 @@ public class TeamSchedule extends BaseClass {
 		// set ThreadPolicy, this is needed to pull down info from the db on the main thread
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		StrictMode.setThreadPolicy(policy);
+		
+		tv_schoolName = (TextView)findViewById(R.id.tv_schedule_teamName);
+		tv_schoolName.setText(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("currentSchool", ""));
 		
 		instantiateComponents();
 		games = getSchedule();

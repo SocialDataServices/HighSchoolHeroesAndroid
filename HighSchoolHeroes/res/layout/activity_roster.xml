@@ -16,12 +16,22 @@
         android:imeOptions="actionSearch"
         android:inputType="text"
         android:visibility="gone" />
+    
+    <TextView
+        android:id="@+id/tv_roster_teamName"
+        android:layout_below="@id/et_roster_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColor="#3339fb"
+        android:textSize="@dimen/fontSize_schoolNameHeader"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/ll_roster_columnHeaders"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/et_roster_search"
+        android:layout_below="@id/tv_roster_teamName"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:weightSum="1" >
 

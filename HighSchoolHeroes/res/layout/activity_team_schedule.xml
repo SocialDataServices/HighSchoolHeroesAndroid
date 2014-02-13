@@ -9,29 +9,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".TeamSchedule" >
 
-    <LinearLayout
-        android:id="@+id/ll_schedule_teamHeader"
+    <TextView
+        android:id="@+id/tv_schedule_teamName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="Oxford High School"
-            android:textColor="#3339fb"
-            android:textSize="@dimen/fontSize_schoolNameHeader"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:background="@drawable/oxford_logo_sample"
-            android:contentDescription="school logo" />
-    </LinearLayout>
+        android:textColor="#3339fb"
+        android:textSize="@dimen/fontSize_schoolNameHeader"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/ll_schedule_currentGame"
@@ -95,6 +80,5 @@
         android:choiceMode="singleChoice"
         android:dividerHeight="3dp"
         android:listSelector="@drawable/hololight_list_selector_holo_light" />
-
 
 </LinearLayout>

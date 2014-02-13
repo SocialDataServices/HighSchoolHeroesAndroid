@@ -108,6 +108,9 @@ public class SchoolsList extends BaseClass {
 				SharedPreferences.Editor spEditor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
 				spEditor.putString("currentSchool", userSchools.get(pos).name);
 				spEditor.commit();
+				
+				Intent toSchedule = new Intent(getApplicationContext(), TeamSchedule.class);
+				startActivity(toSchedule);
 			}
 		});
 	}

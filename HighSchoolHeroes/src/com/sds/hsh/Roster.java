@@ -3,6 +3,7 @@ package com.sds.hsh;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -53,7 +54,7 @@ public class Roster extends BaseClass {
 	String[] playerFirsts, playerLasts, playerYears, playerHeights, playerPositions;
 	ListView lv_roster;
 	View previousSelection;
-	TextView tv_nameHeader, tv_weightHeader, tv_heightHeader, tv_positionHeader, tv_yearHeader, tv_numberHeader;
+	TextView tv_nameHeader, tv_weightHeader, tv_heightHeader, tv_positionHeader, tv_yearHeader, tv_numberHeader, tv_teamName;
 	boolean nameInAscending = false, weightInAscending = false, heightInAscending = false, positionInAscending = false, yearInAscending = false, 
 			numberInAscending = false, postApi10;
 	ImageButton ib_search;
@@ -69,6 +70,7 @@ public class Roster extends BaseClass {
 		ctx = this;
 		
 		instantiateComponents();
+		tv_teamName.setText(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("currentSchool", ""));
 		players = getRoster();
 		setupListView();
 		configureActionBar();
@@ -87,6 +89,7 @@ public class Roster extends BaseClass {
 		public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 			if(actionId == EditorInfo.IME_ACTION_SEARCH){
 				String toSearchFor = et_search.getText().toString();
+				doRosterSearch(toSearchFor);
 				resetActionBar();
 				InputMethodManager inputManager = (InputMethodManager)ctx.getSystemService(Context.INPUT_METHOD_SERVICE); 
 				inputManager.hideSoftInputFromWindow(((Activity) ctx).getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
@@ -105,6 +108,99 @@ public class Roster extends BaseClass {
 			ib_search.setVisibility(View.GONE);
 		}
 	};
+	
+	private boolean isInteger(String s) {
+		
+		try {
+			Integer.parseInt(s);
+		} catch(NumberFormatException e) {
+			return false;
+		}
+		return true;
+	}
+	
+	// returns position of result
+	private Player doBinarySearchPlayerNumbers(ArrayList<Player> players, int target, int beginIndex, int endIndex) {
+		
+		if(beginIndex > endIndex)
+			return null;
+		
+		int mid = players.get((beginIndex + endIndex)/2).number;
+		
+		if(target > mid) 
+			return doBinarySearchPlayerNumbers(players, target, mid+1, endIndex);
+		else if(target < mid) 
+			return doBinarySearchPlayerNumbers(players, target, 0, mid-1);
+		else return players.get(mid-1);
+		
+	}
+	
+	private ArrayList<Player> doSearchPlayerNames(String target) {
+		
+		ArrayList<Player> playersClone = players;
+		target = target.toLowerCase();
+		ArrayList<Player> result = new ArrayList<Player>();
+		
+		// if exact match, runs in n time
+		for(int i = 0; i < playersClone.size(); i++) {
+			String curName = playersClone.get(i).firstName + " " + playersClone.get(i).lastName;
+			if(target.compareTo(curName.toLowerCase()) == 0) {
+				result.add(playersClone.get(i));
+				return result;
+			}
+		}
+		
+		// else runs in 2(n*nameLength) time
+		int bestMatchCounter = 0;
+		
+		for(int a = 0; a < playersClone.size(); a++) {
+			String curName = playersClone.get(a).firstName.toLowerCase();
+			int charCounter = 0;
+			for(int b = 0; b < target.length(); b++) {
+				if(curName.length() > b)
+					if(target.charAt(b) == curName.charAt(b))
+						charCounter++;
+			}
+			if(charCounter > bestMatchCounter) {
+				bestMatchCounter = charCounter;
+				result.add(playersClone.get(a));
+			}
+		} 
+		
+		for(int a = 0; a < playersClone.size(); a++) {
+			String curName = playersClone.get(a).lastName.toLowerCase();
+			int charCounter = 0;
+			for(int b = 0; b < target.length(); b++) {
+				if(curName.length() > b)
+					if(target.charAt(b) == curName.charAt(b))
+						charCounter++;
+			}
+			if(charCounter > bestMatchCounter) {
+				bestMatchCounter = charCounter;
+				result.add(playersClone.get(a));
+			}
+		} 
+		return result;
+	}
+	
+	// returns position of result
+	private void doRosterSearch(String target) {
+		
+		Player finalResult = null;
+		ArrayList<Player> searchResults;
+		
+		if(isInteger(target)) {
+			ArrayList<Player> playersClone = players;
+			Collections.sort(playersClone, new AscendingNumberComparer());
+			finalResult = doBinarySearchPlayerNumbers(playersClone, Integer.parseInt(target), 0, players.size()-1);
+		}
+		else 
+			searchResults = doSearchPlayerNames(target);
+			
+		if(finalResult != null) 
+			showPlayerBioDialog(finalResult);
+		
+	}
 	
 	private void configureActionBar() {
 		
@@ -461,6 +557,8 @@ public class Roster extends BaseClass {
 		tv_positionHeader = (TextView)findViewById(R.id.tv_roster_header_position);
 		tv_yearHeader = (TextView)findViewById(R.id.tv_roster_header_year);
 		tv_numberHeader = (TextView)findViewById(R.id.tv_roster_header_number);
+		
+		tv_teamName = (TextView)findViewById(R.id.tv_roster_teamName);
 		
 		tv_nameHeader.setOnClickListener(columnHeaderListener);
 		tv_weightHeader.setOnClickListener(columnHeaderListener);
